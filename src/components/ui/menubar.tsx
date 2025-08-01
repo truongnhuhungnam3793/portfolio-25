@@ -3,7 +3,7 @@
 import { motion, Variants } from "framer-motion"
 import { Bell, Home, MoonIcon, Settings, SunIcon, User } from "lucide-react"
 import { useTheme } from "next-themes"
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 // --- MenuBar Component ---
 
@@ -50,7 +50,6 @@ const menuItems: MenuItem[] = [
   },
 ]
 
-// Animation variants for different parts of the menu
 const itemVariants: Variants = {
   initial: { rotateX: 0, opacity: 1 },
   hover: { rotateX: -90, opacity: 0 },
@@ -93,9 +92,28 @@ const sharedTransition = {
 
 function MenuBar(): React.JSX.Element {
   const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark")
   }
+
+  const renderThemeIcon = () => {
+    if (!mounted) {
+      return <SunIcon className="h-5 w-5" />
+    }
+
+    return theme === "dark" ? (
+      <SunIcon className="h-5 w-5" />
+    ) : (
+      <MoonIcon className="h-5 w-5" />
+    )
+  }
+
   return (
     <motion.nav
       className="p-2 rounded-2xl bg-white/60 dark:bg-black/60 backdrop-blur-lg border border-gray-200/80 dark:border-gray-800/80 shadow-lg dark:shadow-gray-900/20 relative overflow-hidden"
@@ -176,11 +194,7 @@ function MenuBar(): React.JSX.Element {
             className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500 dark:focus:ring-gray-400 transition-colors duration-300"
             aria-label="Toggle theme"
           >
-            {theme === "dark" ? (
-              <SunIcon className="h-5 w-5" />
-            ) : (
-              <MoonIcon className="h-5 w-5" />
-            )}
+            {renderThemeIcon()}
           </button>
         </motion.li>
       </ul>
