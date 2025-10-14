@@ -32,7 +32,7 @@ export const HeroSection = () => {
             transition: { duration: 0.8, ease: "easeOut" },
           }}
         >
-          Scarlett Rose
+          Hung Nam
           <motion.span
             className="text-sm text-green-500 font-semibold block"
             initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
@@ -43,7 +43,7 @@ export const HeroSection = () => {
               transition: { duration: 0.8, ease: "easeOut" },
             }}
           >
-            She / Her
+            He / Him
           </motion.span>
         </motion.h1>
 
@@ -57,7 +57,7 @@ export const HeroSection = () => {
             transition: { duration: 0.8, ease: "easeOut" },
           }}
         >
-          Experienced Designer & Full-Stack Developer
+          Experienced Frontend Developer
         </motion.h2>
 
         <motion.p
@@ -70,11 +70,10 @@ export const HeroSection = () => {
             transition: { duration: 0.8, ease: "easeOut" },
           }}
         >
-          Crafting elegant, user-friendly, and high-performance digital
-          experiences for global brands. Specializing in UI/UX design, frontend
-          & backend development, and creating scalable solutions that captivate
-          audiences. Passionate about blending creativity with technology to
-          bring ideas to life.
+          I’m a Front-End Web Developer with years of experience crafting
+          modern, high-performance websites. I specialize in building landing
+          pages with smooth animations using React, Next.js, and Tailwind CSS,
+          creating clean, responsive, and visually engaging user experiences.
         </motion.p>
 
         <motion.div
@@ -88,8 +87,8 @@ export const HeroSection = () => {
           }}
         >
           <Badge className="text-xs bg-green-500">Team Lead</Badge>
-          <Badge className="text-xs bg-green-500">Problem Solving</Badge>
           <Badge className="text-xs bg-green-500">Decision Making</Badge>
+          <Badge className="text-xs bg-green-500">Frontend Developer</Badge>
         </motion.div>
       </motion.div>
 
@@ -106,8 +105,8 @@ export const HeroSection = () => {
       >
         <div className="w-64 h-64 rounded-full overflow-hidden shadow-lg">
           <img
-            src="https://images.pexels.com/photos/5908778/pexels-photo-5908778.jpeg"
-            alt="Scarlett Rose"
+            src="/photo.png"
+            alt="Hung Nam"
             className="w-full h-full object-cover"
           />
         </div>

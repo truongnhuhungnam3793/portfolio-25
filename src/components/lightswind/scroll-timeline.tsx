@@ -1,44 +1,44 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react"
 import {
   motion,
   useScroll,
   useTransform,
   useSpring,
   MotionValue,
-} from "framer-motion";
-import { cn } from "../lib/utils";
-import { Card, CardContent } from "./card";
-import { Calendar } from "lucide-react";
+} from "framer-motion"
+import { cn } from "../lib/utils"
+import { Card, CardContent } from "./card"
+import { Calendar } from "lucide-react"
 
 export interface TimelineEvent {
-  id?: string;
-  year: string;
-  title: string;
-  subtitle?: string;
-  description: string;
-  icon?: React.ReactNode;
-  color?: string;
+  id?: string
+  year: string
+  title: string
+  subtitle?: string
+  description: string
+  icon?: React.ReactNode
+  color?: string
 }
 
 export interface ScrollTimelineProps {
-  events: TimelineEvent[];
-  title?: string;
-  subtitle?: string;
-  animationOrder?: "sequential" | "staggered" | "simultaneous";
-  cardAlignment?: "alternating" | "left" | "right";
-  lineColor?: string;
-  activeColor?: string;
-  progressIndicator?: boolean;
-  cardVariant?: "default" | "elevated" | "outlined" | "filled";
-  cardEffect?: "none" | "glow" | "shadow" | "bounce";
-  parallaxIntensity?: number;
-  progressLineWidth?: number;
-  progressLineCap?: "round" | "square";
-  dateFormat?: "text" | "badge";
-  className?: string;
-  revealAnimation?: "fade" | "slide" | "scale" | "flip" | "none";
-  connectorStyle?: "dots" | "line" | "dashed";
-  darkMode?: boolean;
+  events: TimelineEvent[]
+  title?: string
+  subtitle?: string
+  animationOrder?: "sequential" | "staggered" | "simultaneous"
+  cardAlignment?: "alternating" | "left" | "right"
+  lineColor?: string
+  activeColor?: string
+  progressIndicator?: boolean
+  cardVariant?: "default" | "elevated" | "outlined" | "filled"
+  cardEffect?: "none" | "glow" | "shadow" | "bounce"
+  parallaxIntensity?: number
+  progressLineWidth?: number
+  progressLineCap?: "round" | "square"
+  dateFormat?: "text" | "badge"
+  className?: string
+  revealAnimation?: "fade" | "slide" | "scale" | "flip" | "none"
+  connectorStyle?: "dots" | "line" | "dashed"
+  darkMode?: boolean
 }
 
 const DEFAULT_EVENTS: TimelineEvent[] = [
@@ -61,7 +61,7 @@ const DEFAULT_EVENTS: TimelineEvent[] = [
     subtitle: "Organization Name",
     description: "Information about this key event in the timeline.",
   },
-];
+]
 
 export const ScrollTimeline = ({
   events = DEFAULT_EVENTS,
@@ -82,78 +82,78 @@ export const ScrollTimeline = ({
   connectorStyle = "line",
   darkMode = false,
 }: ScrollTimelineProps) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(-1);
-  const timelineRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(-1)
+  const timelineRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start start", "end end"],
-  });
+  })
 
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,
-  });
+  })
 
   const yOffset: MotionValue<number> = useTransform(
     smoothProgress,
     [0, 1],
     [parallaxIntensity * 100, -parallaxIntensity * 100]
-  );
+  )
 
-  const progressHeight = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+  const progressHeight = useTransform(smoothProgress, [0, 1], ["0%", "100%"])
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.onChange((v) => {
-      const newIndex = Math.floor(v * events.length);
+      const newIndex = Math.floor(v * events.length)
       if (
         newIndex !== activeIndex &&
         newIndex >= 0 &&
         newIndex < events.length
       ) {
-        setActiveIndex(newIndex);
+        setActiveIndex(newIndex)
       }
-    });
-    return () => unsubscribe();
-  }, [scrollYProgress, events.length, activeIndex]);
+    })
+    return () => unsubscribe()
+  }, [scrollYProgress, events.length, activeIndex])
 
   const getConnectorClasses = () => {
     const baseClasses = cn(
       "absolute left-1/2 transform -translate-x-1/2",
       lineColor
-    );
-    const widthStyle = `w-[${progressLineWidth}px]`;
+    )
+    const widthStyle = `w-[${progressLineWidth}px]`
     switch (connectorStyle) {
       case "dots":
-        return cn(baseClasses, "w-1 rounded-full");
+        return cn(baseClasses, "w-1 rounded-full")
       case "dashed":
         return cn(
           baseClasses,
           widthStyle,
           `[mask-image:linear-gradient(to_bottom,black_33%,transparent_33%,transparent_66%,black_66%)] [mask-size:1px_12px]`
-        );
+        )
       case "line":
       default:
-        return cn(baseClasses, widthStyle);
+        return cn(baseClasses, widthStyle)
     }
-  };
+  }
 
   const getCardClasses = (index: number) => {
-    const baseClasses = "relative z-30 rounded-lg transition-all duration-300";
+    const baseClasses = "relative z-30 rounded-lg transition-all duration-300"
     const variantClasses = {
       default: "bg-card border shadow-sm",
       elevated: "bg-card border border-border/40 shadow-md",
       outlined: "bg-card/50 backdrop-blur border-2 border-primary/20",
       filled: "bg-primary/10 border border-primary/30",
-    };
+    }
     const effectClasses = {
       none: "",
       glow: "hover:shadow-[0_0_15px_rgba(var(--primary-rgb)/0.5)]",
       shadow: "hover:shadow-lg hover:-translate-y-1",
       bounce: "hover:scale-[1.03] hover:shadow-md active:scale-[0.97]",
-    };
+    }
     const alignmentClassesDesktop =
       cardAlignment === "alternating"
         ? index % 2 === 0
@@ -161,15 +161,15 @@ export const ScrollTimeline = ({
           : "lg:ml-[calc(50%+20px)]"
         : cardAlignment === "left"
         ? "lg:mr-auto lg:ml-0"
-        : "lg:ml-auto lg:mr-0";
+        : "lg:ml-auto lg:mr-0"
     return cn(
       baseClasses,
       variantClasses[cardVariant],
       effectClasses[cardEffect],
       alignmentClassesDesktop,
       "w-full lg:w-[calc(50%-40px)]"
-    );
-  };
+    )
+  }
 
   const getInitialProps = (index: number) => {
     const baseDelay =
@@ -177,7 +177,7 @@ export const ScrollTimeline = ({
         ? 0
         : animationOrder === "staggered"
         ? index * 0.2
-        : index * 0.3;
+        : index * 0.3
 
     const initialStates = {
       fade: { opacity: 0, y: 20 },
@@ -195,7 +195,7 @@ export const ScrollTimeline = ({
       scale: { scale: 0.8, opacity: 0 },
       flip: { rotateY: 90, opacity: 0 },
       none: { opacity: 1 },
-    };
+    }
 
     return {
       initial: initialStates[revealAnimation],
@@ -212,8 +212,8 @@ export const ScrollTimeline = ({
         },
       },
       viewport: { once: false, margin: "-100px" },
-    };
-  };
+    }
+  }
 
   return (
     <div
@@ -281,12 +281,12 @@ export const ScrollTimeline = ({
 
           <div className="relative z-20">
             {events.map((event, index) => {
-              const animationProps = getInitialProps(index);
+              const animationProps = getInitialProps(index)
               return (
                 <div
                   key={event.id || index}
                   ref={(el) => {
-                    timelineRefs.current[index] = el; // <-- correct
+                    timelineRefs.current[index] = el // <-- correct
                   }}
                   className={cn(
                     "relative flex items-center mb-20 py-4 flex-col lg:flex-row",
@@ -367,17 +367,22 @@ export const ScrollTimeline = ({
                           </p>
                         )}
                         <p className="text-muted-foreground">
-                          {event.description}
+                          {event.description.split("\n").map((line, index) => (
+                            <span key={index}>
+                              {line}
+                              <br />
+                            </span>
+                          ))}
                         </p>
                       </CardContent>
                     </Card>
                   </motion.div>
                 </div>
-              );
+              )
             })}
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

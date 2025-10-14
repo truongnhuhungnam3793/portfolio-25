@@ -42,10 +42,11 @@ export default function ProfessionalProfile() {
             <CardContent className="space-y-4">
               {[
                 { name: "React.js / Next.js", level: 95 },
-                { name: "Node.js / Express", level: 90 },
-                { name: "TypeScript & JavaScript", level: 92 },
-                { name: "Database (MongoDB / PostgreSQL)", level: 88 },
-                { name: "Cloud (AWS / Azure)", level: 85 },
+                { name: "TypeScript & JavaScript", level: 90 },
+                { name: "PHP / Wordpress", level: 95 },
+                { name: "Framer Motion / GSAP", level: 90 },
+                { name: "Figma / Photoshop", level: 93 },
+                { name: "Ai", level: 80 },
               ].map((skill, i) => (
                 <motion.div
                   key={i}

@@ -1,6 +1,6 @@
-import { Card, CardHeader, CardTitle, CardContent } from "../lightswind/card";
-import ProfessionalProfile from "./SkillCategory";
-import { motion } from "framer-motion";
+import { Card, CardHeader, CardTitle, CardContent } from "../lightswind/card"
+import ProfessionalProfile from "./SkillCategory"
+import { motion } from "framer-motion"
 
 export const EducationSection = () => {
   return (
@@ -33,42 +33,19 @@ export const EducationSection = () => {
         >
           <Card>
             <CardHeader>
-              <CardTitle>M.Sc. in Computer Science</CardTitle>
+              <CardTitle>
+                Software Technology – Faculty of Information Technology
+              </CardTitle>
               <p className="text-sm text-muted-foreground">
-                University of Chennai — 2016 – 2018
+                Bachelor Phu Xuan University — 2014 – 2017
               </p>
             </CardHeader>
             <CardContent className="text-xs text-muted-foreground space-y-2">
               <p>
                 Specialized in <strong>Software Architecture</strong>,
-                <strong> Distributed Systems</strong>, and
-                <strong> Artificial Intelligence Applications</strong>.
+                <strong> Software Technology</strong>, and
+                <strong> Faculty of Information Technology</strong>.
               </p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Thesis on Machine Learning for Predictive Analytics</li>
-                <li>Led a research project on Cloud-Based ERP solutions</li>
-                <li>Published 2 papers in IEEE conferences</li>
-              </ul>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>B.Sc. in Information Technology</CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Anna University — 2013 – 2016
-              </p>
-            </CardHeader>
-            <CardContent className="text-xs text-muted-foreground space-y-2">
-              <p>
-                Gained strong foundation in <strong>Programming</strong>,
-                <strong> Networking</strong>, and
-                <strong> Database Management</strong>.
-              </p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Top 5% in Software Engineering coursework</li>
-                <li>Developed a campus-wide library management system</li>
-                <li>Organized annual tech fest for 3 consecutive years</li>
-              </ul>
             </CardContent>
           </Card>
         </motion.div>
@@ -76,5 +53,5 @@ export const EducationSection = () => {
 
       <ProfessionalProfile />
     </motion.section>
-  );
-};
+  )
+}

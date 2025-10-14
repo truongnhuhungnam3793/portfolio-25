@@ -1,52 +1,45 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { DragOrderList } from "../lightswind/DragOrderList";
-import { motion } from "framer-motion";
+import { useState } from "react"
+import { DragOrderList } from "../lightswind/DragOrderList"
+import { motion } from "framer-motion"
 
 export const ProjectsSection = () => {
   const [projects] = useState([
     {
       id: 1,
-      title: "AI-Powered Design Automation Platform",
+      title: "Ai Resume Analyzer",
       subtitle:
-        "Developed an AI-driven platform that automates design workflows for global e-commerce brands...",
+        "Analyze your resume and get a score of your skills and experience.",
       date: "2024",
-      link: "https://example.com/ai-platform",
-      image:
-        "https://images.pexels.com/photos/8294591/pexels-photo-8294591.jpeg",
+      link: "https://ai-resume-analyzer-murex-five.vercel.app/",
+      image: "/project-1.png",
     },
     {
       id: 2,
-      title: "Enterprise Resource Planning (ERP) System",
-      subtitle:
-        "Led the development of a modular ERP system for a manufacturing conglomerate...",
+      title: "Countries Information",
+      subtitle: "Get information about countries around the world.",
       date: "2023",
-      link: "https://example.com/erp",
-      image:
-        "https://images.pexels.com/photos/1148820/pexels-photo-1148820.jpeg",
+      link: "https://countries-app-inky.vercel.app/",
+      image: "/project-2.png",
     },
     {
       id: 3,
-      title: "Blockchain-Based Supply Chain Tracker",
-      subtitle:
-        "Created a transparent and tamper-proof supply chain tracking system using Hyperledger Fabric...",
+      title: "AI Image Editor",
+      subtitle: "Edit your images with AI.",
       date: "2022",
-      link: "https://example.com/supplychain",
-      image:
-        "https://images.pexels.com/photos/6169673/pexels-photo-6169673.jpeg",
+      link: "https://ai-image-editor-saas-virid.vercel.app/",
+      image: "/project-3.png",
     },
     {
       id: 4,
-      title: "Global E-Learning Platform",
-      subtitle:
-        "Designed and implemented a multi-language e-learning platform serving over 1.2 million students...",
+      title: "Gaming Landing Page",
+      subtitle: "A gaming landing page with a modern design.",
       date: "2021",
-      link: "https://example.com/elearning",
-      image:
-        "https://images.pexels.com/photos/15595050/pexels-photo-15595050.jpeg",
+      link: "https://awwwards-liard.vercel.app/",
+      image: "/project-4.png",
     },
-  ]);
+  ])
 
   return (
     <motion.div
@@ -67,5 +60,5 @@ export const ProjectsSection = () => {
         <DragOrderList items={projects} />
       </section>
     </motion.div>
-  );
-};
+  )
+}
