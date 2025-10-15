@@ -26,9 +26,60 @@ export const ContactSection: React.FC = () => {
     defaultValues: { name: "", email: "", message: "" },
   })
 
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
+  const [submitSuccess, setSubmitSuccess] = React.useState<string | null>(null)
+  const [submitError, setSubmitError] = React.useState<string | null>(null)
+  const endpointEnv = import.meta.env.VITE_FORMSPREE_ENDPOINT as
+    | string
+    | undefined
+  const endpoint = endpointEnv?.trim()
+
   const onSubmit: SubmitHandler<ContactFormValues> = async (values) => {
-    // Replace with your backend/API later
-    console.log("Contact form submitted:", values)
+    setIsSubmitting(true)
+    setSubmitSuccess(null)
+    setSubmitError(null)
+
+    if (!endpoint) {
+      setIsSubmitting(false)
+      setSubmitError(
+        "Form endpoint is not configured. Please set VITE_FORMSPREE_ENDPOINT."
+      )
+      return
+    }
+
+    try {
+      const formData = new FormData()
+      formData.append("name", values.name)
+      formData.append("email", values.email)
+      formData.append("message", values.message)
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: formData,
+      })
+
+      if (response.ok) {
+        setSubmitSuccess("Thanks! Your message has been sent.")
+        methods.reset()
+      } else {
+        // Try to extract useful error information
+        let msg = "Sorry, something went wrong. Please try again."
+        const text = await response.text().catch(() => "")
+        try {
+          const data = JSON.parse(text)
+          msg = (data && (data.error || data.message)) || msg
+        } catch {
+          if (text) msg = `${msg} (status ${response.status}: ${text})`
+          else msg = `${msg} (status ${response.status})`
+        }
+        setSubmitError(msg)
+      }
+    } catch (err) {
+      setSubmitError("Network error. Please try again later.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -44,6 +95,8 @@ export const ContactSection: React.FC = () => {
         <Form {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
+            action={endpoint || undefined}
+            method="POST"
             className="space-y-6 bg-card/60 backdrop-blur rounded-2xl p-6 border border-border"
           >
             <FormField
@@ -113,10 +166,16 @@ export const ContactSection: React.FC = () => {
               )}
             />
 
-            <div className="pt-2">
-              <Button type="submit" className="w-full">
-                Send message
+            <div className="pt-2 space-y-2">
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Send message"}
               </Button>
+              {submitSuccess && (
+                <p className="text-sm text-green-600">{submitSuccess}</p>
+              )}
+              {submitError && (
+                <p className="text-sm text-red-600">{submitError}</p>
+              )}
             </div>
           </form>
         </Form>
