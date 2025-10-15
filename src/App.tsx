@@ -1,55 +1,57 @@
 // App.jsx
-import { useState, useEffect } from "react";
-import "./App.css";
-import Header from "./components/Header/Header";
-import { HeroSection } from "./components/HeroSection/HeroSection";
-import StripedBackground from "./components/lightswind/StripedBackground";
-import { AboutSection } from "./components/AboutSection/AboutSection";
-import { ProjectsSection } from "./components/ProjectsSection/ProjectsSection";
-import { EducationSection } from "./components/EducationSection/EducationSection";
-import { CareerTimeline } from "./components/CareerSection/CareerTimeline";
-import ReactLenis from "lenis/react";
-import Dock from "./components/lightswind/dock";
+import { useState, useEffect } from "react"
+import "./App.css"
+import Header from "./components/Header/Header"
+import { HeroSection } from "./components/HeroSection/HeroSection"
+import StripedBackground from "./components/lightswind/StripedBackground"
+import { AboutSection } from "./components/AboutSection/AboutSection"
+import { ProjectsSection } from "./components/ProjectsSection/ProjectsSection"
+import { EducationSection } from "./components/EducationSection/EducationSection"
+import { CareerTimeline } from "./components/CareerSection/CareerTimeline"
+import ReactLenis from "lenis/react"
+import Dock from "./components/lightswind/dock"
 import {
   Home,
   User,
   GraduationCap,
   Briefcase,
   FolderKanban,
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+  Mail,
+} from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import ContactSection from "./components/ContactSection/ContactSection"
 
 function App() {
-  const [showDock, setShowDock] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [showDock, setShowDock] = useState(false)
+  const [lastScrollY, setLastScrollY] = useState(0)
 
   // Track scroll direction
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      const currentScrollY = window.scrollY
 
       if (currentScrollY > lastScrollY) {
         // scrolling down -> show Dock
-        setShowDock(true);
+        setShowDock(true)
       } else {
         // scrolling up -> hide Dock
-        setShowDock(false);
+        setShowDock(false)
       }
 
-      setLastScrollY(currentScrollY);
-    };
+      setLastScrollY(currentScrollY)
+    }
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [lastScrollY])
 
   // Helper for smooth scroll
   const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
+    const el = document.getElementById(id)
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      el.scrollIntoView({ behavior: "smooth", block: "start" })
     }
-  };
+  }
 
   // Dock items
   const dockItems = [
@@ -78,7 +80,12 @@ function App() {
       label: "Projects",
       onClick: () => scrollToSection("projects"),
     },
-  ];
+    {
+      icon: <Mail size={24} />,
+      label: "Contact",
+      onClick: () => scrollToSection("contact"),
+    },
+  ]
 
   return (
     <div className="bg-background min-h-screen flex items-center justify-center">
@@ -109,6 +116,9 @@ function App() {
             <div id="projects">
               <ProjectsSection />
             </div>
+            <div id="contact">
+              <ContactSection />
+            </div>
           </div>
         </div>
 
@@ -135,7 +145,7 @@ function App() {
 
       {/* <SmoothCursor /> */}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
